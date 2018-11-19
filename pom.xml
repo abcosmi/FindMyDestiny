@@ -110,6 +110,14 @@
 		<artifactId>font-awesome</artifactId>
 		<version>4.2.0</version>
 	</dependency>
+<!-- https://mvnrepository.com/artifact/org.apache.jena/apache-jena-libs -->
+<dependency>
+    <groupId>org.apache.jena</groupId>
+    <artifactId>apache-jena-libs</artifactId>
+    <version>3.9.0</version>
+    <type>pom</type>
+</dependency>
+
   </dependencies>
   <repositories>
     <repository>

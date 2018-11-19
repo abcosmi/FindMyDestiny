@@ -6,6 +6,8 @@
 		<class>br.ufes.inf.nemo.jbutler.ejb.persistence.PersistentObjectSupport</class>
 		<class>find_my_destiny.FindMyDestinyTour</class>
 		<class>find_my_destiny.FindMyDestinyUser</class>
+		<class>find_my_destiny.Destination</class>
+		<class>find_my_destiny.TourismPackage</class>
 		<properties>
 		    <property name="hibernate.hbm2ddl.auto" value="update" />
 		</properties>
