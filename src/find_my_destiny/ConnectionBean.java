@@ -281,9 +281,9 @@ public final class ConnectionBean {
             
             UIViewRoot viewRoot = FacesContext.getCurrentInstance().getViewRoot();
             UIComponent component = (UIComponent)viewRoot.findComponent("form_"+id);
-            component.setParent(null);
-            component.setRendered(false);
-            component.clearInitialState();
+            //component.setParent(null);
+            component.getParent().setRendered(false);
+            component.getParent().clearInitialState();
             
             // NOTE: Update after deletion
             System.out.println("update");
