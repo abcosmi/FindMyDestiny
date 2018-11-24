@@ -34,6 +34,8 @@ public final class ConnectionBean {
         private Package tourPackage;
 	@Inject
         private Login login;
+    @Inject
+        private SessionController session;
 	
 	// TODO: this is temporary
 	private String packagesFromUserHtml;
@@ -96,6 +98,19 @@ public final class ConnectionBean {
 		}
 	}
 	
+    public void commitUserData(String name, String username, String cpf, String email, String address, String telephone,
+                               String cellphone, String password)
+    {
+        session.getLoggedUser().setName(name);
+        session.getLoggedUser().setUsername(username);
+        session.getLoggedUser().setCpf(cpf);
+        session.getLoggedUser().setAddress(address);
+        session.getLoggedUser().setTelephone(telephone);
+        session.getLoggedUser().setCellphone(cellphone);
+        session.getLoggedUser().setPassword(password);
+        session.getLoggedUser().setEmail(email);
+    }
+    
     public void loginUser()
     {
         try
@@ -103,8 +118,8 @@ public final class ConnectionBean {
             java.sql.Connection Conn = this.getConnection();
 			Statement statement = Conn.createStatement();
             
-            String username = user.getUsername();
-            String password = user.getPassword();
+            String username = session.getLoggedUser().getUsername();
+            String password = session.getLoggedUser().getPassword();
             
             String sql = "SELECT username, id from user where username like '"+
                 username+"' and password like '"+password+"'";
@@ -114,8 +129,8 @@ public final class ConnectionBean {
             while(resultSet.next())
             {
             	login.setLoginStatus(true);
-            	user.setId(resultSet.getInt("id"));
-            	user.setUsername(resultSet.getString("username"));
+            	session.getLoggedUser().setId(resultSet.getInt("id"));
+            	session.getLoggedUser().setUsername(resultSet.getString("username"));
             	ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
             	externalContext.redirect("hub.xhtml");
             }
@@ -298,4 +313,6 @@ public final class ConnectionBean {
     }
     
     public Connection getConnection() {return Conn;}
+    
+    public SessionController getSession() {return session;}
 }

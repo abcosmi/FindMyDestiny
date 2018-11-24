@@ -7,42 +7,42 @@
 
 	<div class="row">
 		<div class="col-md-2 col-sm-4" style="text-align:right;font-size:12px">Nome Completo</div>
-    	<div class="col-md-10 col-sm-8"><p:inputText name="name" value="#{findMyDestinyController.user.name}" required="true" style="width:70%"/><br /></div>
+    	<div class="col-md-10 col-sm-8"><p:inputText id="private_person_name" name="name" value="#{findMyDestinyController.name}" required="true" style="width:70%"/><br /></div>
 	</div>
 	<br />
 	<div class="row">
 		<div class="col-md-2 col-sm-4" style="text-align:right;font-size:12px">Nome de usuário</div>
-    	<div class="col-md-10 col-sm-8"><p:inputText name="username" value="#{findMyDestinyController.user.username}" required="true" style="width:60%" /><br /></div>
+    	<div class="col-md-10 col-sm-8"><p:inputText name="username" value="#{findMyDestinyController.username}" required="true" style="width:60%" /><br /></div>
 	</div>
 	<br />
 	<div class="row">
 		<div class="col-md-2 col-sm-4" style="text-align:right;font-size:12px">E-mail</div>
-    	<div class="col-md-10 col-sm-8"><p:inputText name="email" type="email" value="#{findMyDestinyController.user.email}" required="true" style="width:60%" /><br /></div>
+    	<div class="col-md-10 col-sm-8"><p:inputText name="email" type="email" value="#{findMyDestinyController.email}" required="true" style="width:60%" /><br /></div>
 	</div>
 	<br />
 	<div class="row">
 		<div class="col-md-2 col-sm-4" style="text-align:right;font-size:12px">CPF</div>
-    	<div class="col-md-10 col-sm-8"><p:inputText name="cpf" value="#{findMyDestinyController.user.cpf}" required="true" style="width:30%" /><br /></div>
+    	<div class="col-md-10 col-sm-8"><p:inputText name="cpf" value="#{findMyDestinyController.cpf}" required="true" style="width:30%" /><br /></div>
 	</div>
 	<br />
 	<div class="row">
 		<div class="col-ld-2 col-md-2 col-sm-4" style="text-align:right;font-size:12px">Endereço</div>
-    	<div class="col-ld-10 col-md-10 col-sm-8"><p:inputText name="address" value="#{findMyDestinyController.user.address}" required="true" style="width:80%"/><br /></div>
+    	<div class="col-ld-10 col-md-10 col-sm-8"><p:inputText name="address" value="#{findMyDestinyController.address}" required="true" style="width:80%"/><br /></div>
 	</div>
 	<br />
 	<div class="row">
 		<div class="col-ld-2 col-md-2 col-sm-4" style="text-align:right;font-size:12px">Telefone Residencial</div>
-    	<div class="col-lg-3 col-md-3 col-sm-8"><p:inputText name="telephone" value="#{findMyDestinyController.user.telephone}" required="true" style="width:90%" /><br /></div>
+    	<div class="col-lg-3 col-md-3 col-sm-8"><p:inputText name="telephone" value="#{findMyDestinyController.telephone}" required="true" style="width:90%" /><br /></div>
 		<div class="col-ld-2 col-md-2 col-sm-4" style="text-align:right;font-size:12px">Telefone Celular</div>
-    	<div class="col-lg-3 col-md-3 col-sm-8"><p:password type="cellphone" feedback="false" name="cellphone" value="#{findMyDestinyController.user.cellphone}" required="true" style="width:90%" /><br /></div>
+    	<div class="col-lg-3 col-md-3 col-sm-8"><p:password type="cellphone" feedback="false" name="cellphone" value="#{findMyDestinyController.cellphone}" required="true" style="width:90%" /><br /></div>
 	</div>
 	<br />
 	<div class="row">
 			<div class="col-ld-2 col-md-2 col-sm-4" style="text-align:right;font-size:12px">Senha</div>
-    		<div class="col-lg-10 col-md-10 col-sm-8"><p:password type="password" feedback="false" name="password" value="#{findMyDestinyController.user.password}" required="true" style="width:50%" /><br /></div>
+    		<div class="col-lg-10 col-md-10 col-sm-8"><p:password type="password" feedback="false" name="password" value="#{findMyDestinyController.password}" required="true" style="width:50%" /><br /></div>
 	</div>
 	<br />
 	<div class="submit-button" align="center">
-		<p:commandButton type="submit" styleClass="btn btn-common btn-effect" value="Confirmar dados" ajax="true" actionListener="#{findMyDestinyController.createUser()}" />
+		<p:commandButton type="submit" styleClass="btn btn-common btn-effect" value="Confirmar dados" ajax="true" actionListener="#{findMyDestinyController.createUser()}" update="@form"/>
 	</div>
 </html>

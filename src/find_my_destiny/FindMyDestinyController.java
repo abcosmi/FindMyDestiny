@@ -2,23 +2,57 @@ package find_my_destiny;
 
 import java.util.Date;
 import javax.enterprise.inject.Model;
+import javax.faces.bean.ViewScoped;
+import javax.faces.component.UIViewRoot;
+import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.inject.Named;
+import javax.validation.constraints.Pattern;
 
 @Model
+@Named
+@ViewScoped
 public class FindMyDestinyController {
+    private String name;
+    private String username;
+    @Pattern(regexp="[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}", message="Formato de cpf não reconhecido")
+        private String cpf;
+    private String address;
+    private String telephone;
+    private String cellphone;
+    private String email;
+    private String password;
+    
+    public String getName(){return name;}
+    public void setName(String name){this.name = name;}
+    public String getUsername(){return username;}
+    public void setUsername(String username){this.username = username;}
+    public String getCpf(){return cpf;}
+    public void setCpf(String cpf){this.cpf = cpf;}
+    public String getAddress(){return address;}
+    public void setAddress(String address){this.address = address;}
+    public String getTelephone(){return telephone;}
+    public void setTelephone(String telephone){this.telephone = telephone;}
+    public String getPassword(){return password;}
+    public void setPassword(String password){this.password = password;}
+    public String getEmail(){return email;}
+    public void setEmail(String email){this.email = email;}
+    public String getCellphone() {return cellphone;}
+    public void setCellphone(String cellphone) {this.cellphone = cellphone;}
+    
     @Inject
         private ConnectionBean Connection;
     @Inject
         private User user;
     @Inject
-    private Package tourPackage;
+        private Package tourPackage;
     @Inject
-    private Login login;
+        private Login login;
     
-    public User getUser() {return user;}
-    	
+    //public User getUser() {return user;}
+    
 	public ConnectionBean CreateConnection()
 	{
 		return Connection;
@@ -27,16 +61,41 @@ public class FindMyDestinyController {
 	public void login()
 	{
 		Connection.open();	
-		// TODO: login code here (maybe JAAS?) and go to hub.xhtml
+		// TODO: login code here (maybe JAAS?)
         Connection.loginUser();
+        clearUserData();
 		Connection.close();
 	}
 	
 	public void createUser()
 	{
 		Connection.open();
+        Connection.commitUserData(name, username, cpf, email, address, 
+                                  telephone, cellphone, password);
 		Connection.insertUserIntoDatabase();
-		Connection.close();
+        Connection.close();
+        
+        setName("");
+        setUsername("");
+        setCpf("");
+        setAddress("");
+        setTelephone("");
+        setPassword("");
+        setEmail("");
+        setCellphone("");
+        
+        login();
+        
+        try
+        {
+            ExternalContext externalContext = 
+                FacesContext.getCurrentInstance().getExternalContext();
+            externalContext.redirect("hub.xhtml");
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
 	}
 	
 	public void updateUser()
@@ -108,4 +167,16 @@ public class FindMyDestinyController {
 	public void setTourPackage(Package tourPackage) {this.tourPackage= tourPackage;}
 	
 	public Date getTime() {return new Date();}
+    
+    public void clearUserData()
+    {
+        name = "";
+        username = "";
+        cpf = "";
+        email = "";
+        address= "";
+        telephone= "";
+        cellphone = "";
+        password = "";
+    }
 }

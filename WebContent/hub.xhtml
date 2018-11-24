@@ -32,7 +32,7 @@
                 <a class="nav-link page-scroll" href="#screenshots">#{findMyDestinyI18n.getI18nMessage("nav_find")}</a>
               </li>                            
               <li class="nav-item">
-                <a class="nav-link page-scroll" href="hub.xhtml">Bem vindo, #{findMyDestinyController.user.username}</a>
+                <a class="nav-link page-scroll" href="hub.xhtml">Bem vindo, #{ConnectionBean.session.loggedUser.username}</a>
               </li> 
               <li class="nav-item">
                 <p:commandLink class="nav-link page-scroll" action="#{findMyDestinyController.signOut}" >

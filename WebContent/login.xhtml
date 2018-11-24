@@ -58,12 +58,12 @@
 				<h:panelGroup id="registration_panel">
 					<div class="row">
 						<div class="col-md-5 col-sm-4" style="text-align:right;font-size:12px;color:#b0b0b0">Nome Usuário</div>
-    					<div class="col-md-7 col-sm-8"><p:inputText name="name" value="#{findMyDestinyController.user.username}" required="true" style="width:35%" /><br /></div>
+    					<div class="col-md-7 col-sm-8"><p:inputText name="name" value="#{findMyDestinyController.username}" required="true" style="width:35%" /><br /></div>
 					</div>
 					<br />
 					<div class="row">
 						<div class="col-md-5 col-sm-4" style="text-align:right;font-size:12px;color:#b0b0b0">Senha</div>
-    					<div class="col-md-7 col-sm-8"><p:password name="name" value="#{findMyDestinyController.user.password}" required="true" style="width:35%" /><br /></div>
+    					<div class="col-md-7 col-sm-8"><p:password name="name" value="#{findMyDestinyController.password}" required="true" style="width:35%" /><br /></div>
 					</div>
 					<div class="submit-button" align="center" style="padding-top:20px">
 						<p:commandButton id="submit_enterprise" styleClass="btn btn-common btn-effect" value="#{findMyDestinyI18n.getI18nMessage('login')}" ajax="true" actionListener="#{findMyDestinyController.login()}" />
