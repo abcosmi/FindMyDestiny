@@ -64,14 +64,15 @@
 		</style>
 		
 		<script>
-			// Initialize and add the map
+			function showMap()
+			{
+				document.getElementById('map').style.display = "block";
+			}
+		
 			function initMap() {
-  				// The location of Uluru
-  				var placeLocationOnMap = {lat: #{findMyDestinySearch.latitude}, lng: #{findMyDestinySearch.longitude}};
-  				// The map, centered at Uluru
+  				var placeLocationOnMap = {lat: #{connectionBean.lat}, lng: #{connectionBean.lng}};
   				var map = new google.maps.Map(
       				document.getElementById('map'), {zoom: 14, center: placeLocationOnMap});
-  				// The marker, positioned at Uluru
   				var marker = new google.maps.Marker({position: placeLocationOnMap, map: map});
 			}
 					
@@ -90,43 +91,13 @@
     	</script>
     	<script async="async" defer="defer" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDvbyVqbMLuaj-GB2GUfQKdU1SapIp6Dao&amp;callback=initMap">
     	</script>
-    	<script>
-    	//<![CDATA[ 
-			function ListOfPlaces()
-    		{
-   	    		var list = document.getElementById('places_list');
-       			var hub = document.getElementById('places_hub');
-       			list.innerHTML = "#{findMyDestinySearch.htmlListOfPlaces}";
-       			
-       			var children = list.children;
-       			var i;
-    			var element = document.getElementById("plus-sign");
-    			
-       			for(i = 0; i < list.children.length; i++)
-       			{
-       				console.log(list.children[i]);
-       				console.log(element);
-       				list.children[i].appendChild(element.cloneNode(true));	
-       			}
-       			
-       			hub.appendChild(list);
-       			
-	     		console.log(list);
-	     		element.hidden = true;
-    		}
-			
-			function AddPlaceToList()
-			{
-				console.log("Place added to list");
-			}
-    	//]]>
-    		
-    			
-    	</script>
     	
+    	<f:metadata>
+	   	<f:viewParam name="viewId" value="#{View.viewId}" />
+    	<f:event type="preRenderView" listener="#{findMyDestinyController.init}" />
+		</f:metadata>
 	</h:head>
 	<h:body>
-	<ui:include src="list_button.xhtml" />
 	<!-- Header Section Start -->
     <header id="home" class="hero-area-2">   
       <div class="overlay"></div>
@@ -151,26 +122,8 @@
 			<div class="container">
 				<h1>#{findMyDestinySearch.placeName}</h1>
 				<div id="map"></div>
-				<div id="places_hub" class="search-results" >
-					<ul id="places_list" class="search-list">
-						<script>ListOfPlaces()</script>
-						<li id="place1">
-							<div id="plus-sign" class='add_to_list' align='right'> #{findMyDestinyI18n.getI18nMessage('add_to_list')}
-								<h:form method='post' >
-    								<p:commandButton class='btn button_add_to_list' value="" type='submit' onclick='AddPlaceToList()' actionListener='#{findMyDestinySearch.refreshMap()}' >
-    									<i class='fas fa-plus-square fa-2x'></i>
-    								</p:commandButton>
-    							</h:form>
-							</div>
-						</li>
-						<li id="place2"></li>
-						<li id="place3"></li>
-						<li id="place4"></li>
-						<li id="place5"></li>
-					</ul>
-					
-					<f:ajax render="places_hub" event="load" execute="@this" ></f:ajax>
-				</div>
+				<h:panelGroup id="places_hub" class="search-results" >
+				</h:panelGroup>
 			</div>
 		</div>
 	</h:body>

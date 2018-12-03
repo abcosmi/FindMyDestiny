@@ -3,6 +3,7 @@ package find_my_destiny;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
+import java.util.List;
 import java.sql.ResultSet;
 
 import javax.el.ExpressionFactory;
@@ -15,7 +16,7 @@ import javax.faces.component.html.HtmlForm;
 import javax.faces.component.html.HtmlOutputText;
 import javax.faces.component.html.HtmlPanelGroup;
 import javax.inject.Inject;
-
+import javax.inject.Singleton;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.el.MethodBinding;
@@ -25,6 +26,7 @@ import org.primefaces.component.commandbutton.CommandButton;
 @SuppressWarnings("deprecation")
 @ManagedBean
 @SessionScoped
+@Singleton
 public final class ConnectionBean {
 	private Connection Conn;
     
@@ -36,9 +38,21 @@ public final class ConnectionBean {
         private Login login;
     @Inject
         private SessionController session;
+    @Inject
+        private GoogleNearbyApi googleNearbyApi;
+    @Inject 
+        private UIController uiController;
 	
-	// TODO: this is temporary
-	private String packagesFromUserHtml;
+    private float lat = 0.0f;
+    private float lng = 0.0f;
+    
+    public float getLat() {return lat;}
+    public float getLng() {return lng;}
+    public void setLat(float lat) {this.lat = lat;}
+    public void setLng(float lng) {this.lng = lng;}
+    
+    // TODO: this is temporary
+    private String packagesFromUserHtml;
 	
 	private static final String Database_ServerName = "jdbc:mysql://localhost:3306/find_my_destiny";
 	private static final String Database_User = "root";
@@ -227,14 +241,6 @@ public final class ConnectionBean {
                     MethodBinding methodBinding = FacesContext.getCurrentInstance().getApplication().createMethodBinding("#{connectionBean.deletePackage("+id+")}", 
                                                                                                                          new Class[] {int.class});
                     
-                    /*
-                    ExpressionFactory expressionFactory = ExpressionFactory.newInstance();
-                    MethodExpression methodExpression = expressionFactory.createMethodExpression(FacesContext.getCurrentInstance().getELContext(), 
-                                                                                                 "#{connectionBean.deletePackage("+id+")}",
-                                                                                                 String.class,
-                                                                                                 new Class<?>[] { int.class });
-                    */
-                    
                     CommandButton deleteButton = new CommandButton();
                     deleteButton.setStyleClass("btn button_delete");
                     deleteButton.setValue("deletar");
@@ -294,14 +300,8 @@ public final class ConnectionBean {
 			String sql = "DELETE FROM tourism_package where id = "+ id;
 			statement.executeUpdate(sql);
             
-            UIViewRoot viewRoot = FacesContext.getCurrentInstance().getViewRoot();
-            UIComponent component = (UIComponent)viewRoot.findComponent("form_"+id);
-            //component.setParent(null);
-            component.getParent().setRendered(false);
-            component.getParent().clearInitialState();
+            uiController.deletePackage("form_"+id);
             
-            // NOTE: Update after deletion
-            System.out.println("update");
         }
         catch(Exception e)
         {
@@ -310,6 +310,18 @@ public final class ConnectionBean {
         this.close();
         
         searchPackages();
+    }
+    
+    public void insertDestination(String destination, float latitude, float longitude)
+    {
+        System.out.println("selected place: \nname: "+destination+"  latitude: "+latitude+"  longitude: "+longitude);
+        lat = latitude;
+        lng = longitude;
+    }
+    
+    public void showOnMap(String destination, float latitude, float longitude)
+    {
+        
     }
     
     public Connection getConnection() {return Conn;}

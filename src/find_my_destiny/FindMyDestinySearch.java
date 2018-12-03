@@ -38,9 +38,11 @@ public class FindMyDestinySearch
 	private String placeName = null;
     
 	@Inject
-    private GooglePlacesSearchApi apiWraper;
+        private GooglePlacesSearchApi apiWraper;
     @Inject
-    private GoogleNearbyApi nearbyApi;
+        private GoogleNearbyApi nearbyApi;
+    @Inject
+        private ConnectionBean connectionBean;
     
     private int resultsCount = 0;
     
@@ -110,8 +112,12 @@ public class FindMyDestinySearch
                     "&type=park|museum|movie_theater|casino|city_hall|shopping_mall|night_club|stadium|amusement_park|aquarium";
                 json = fetchJSONDataFromAPI(urlBuild);
                 nearbyApi.buildApi(json);
+                System.out.println(urlBuild);
                 
                 System.out.println(nearbyApi.getResultsCount());
+                
+                connectionBean.setLat(latitude);
+                connectionBean.setLat(longitude);
                 
                 HttpServletRequest request = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
                 HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();

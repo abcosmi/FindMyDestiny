@@ -50,10 +50,14 @@ public class FindMyDestinyController {
         private Package tourPackage;
     @Inject
         private Login login;
+    @Inject
+        private FindMyDestinySearch search;
+    @Inject
+        private UIController uiController;
     
     //public User getUser() {return user;}
     
-	public ConnectionBean CreateConnection()
+    public ConnectionBean CreateConnection()
 	{
 		return Connection;
 	}
@@ -161,6 +165,19 @@ public class FindMyDestinyController {
 		{
 			updatePackagesList();
 		}
+        
+        if (viewId.equals("/home.xhtml"))
+        {
+            Connection.setLat(0.0f);
+            Connection.setLng(0.0f);
+        }
+        
+        if (viewId.equals("/destination_search.xhtml"))
+        {
+            Connection.setLat(0.0f);
+            Connection.setLng(0.0f);
+            uiController.destinationSearchBuildUI();
+        }
 	}
 	
 	public Package getTourPackage() {return tourPackage;}
